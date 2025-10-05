@@ -1,0 +1,26 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "assets/img/uploads"
+public_folder: "/assets/img/uploads"
+
+collections:
+  - name: "pages"
+    label: "Pages"
+    files:
+      - label: "Homepage (DE)"
+        name: "index_de"
+        file: "index.html"
+        editor:
+          preview: false
+        fields:
+          - { label: "HTML", name: "body", widget: "code", default_language: "html" }
+
+      - label: "Homepage (EN)"
+        name: "index_en"
+        file: "en/index.html"
+        editor:
+          preview: false
+        fields:
+          - { label: "HTML", name: "body", widget: "code", default_language: "html" }
