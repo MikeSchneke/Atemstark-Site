@@ -4,8 +4,63 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Atemstark CMS</title>
+    <script>window.CMS_DEBUG = true; window.CMS_MANUAL_INIT = true;</script>
+    <!-- Load the CMS app from two CDNs (second is a fallback) -->
     <script src="https://unpkg.com/netlify-cms-app@^2.15.0/dist/netlify-cms.js"></script>
-    <script>window.CMS_DEBUG = true;</script>
+    <script>
+      if (!window.CMS) {
+        var s = document.createElement('script');
+        s.src = "https://cdn.jsdelivr.net/npm/netlify-cms-app@^2.15.0/dist/netlify-cms.js";
+        document.head.appendChild(s);
+      }
+    </script>
   </head>
-  <body></body>
+  <body>
+    <script>
+      // Wait until the bundle is available
+      (function waitForCMS(){
+        if (!window.CMS) return setTimeout(waitForCMS, 50);
+
+        CMS.init({
+          config: {
+            backend: {
+              name: "github",
+              repo: "MikeSchneke/Atemstark-Site",
+              branch: "main",
+              auth_type: "implicit",
+              client_id: "Ov23liuJvdVjUw4h9bSr"   // your GitHub OAuth app Client ID
+            },
+            media_folder: "assets/img/uploads",
+            public_folder: "/assets/img/uploads",
+            collections: [
+              {
+                name: "pages",
+                label: "Pages",
+                files: [
+                  {
+                    label: "Homepage (DE)",
+                    name: "index_de",
+                    file: "index.html",
+                    editor: { preview: false },
+                    fields: [
+                      { label: "HTML", name: "body", widget: "code", default_language: "html" }
+                    ]
+                  },
+                  {
+                    label: "Homepage (EN)",
+                    name: "index_en",
+                    file: "en/index.html",
+                    editor: { preview: false },
+                    fields: [
+                      { label: "HTML", name: "body", widget: "code", default_language: "html" }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        });
+      })();
+    </script>
+  </body>
 </html>
